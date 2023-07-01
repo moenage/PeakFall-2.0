@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 8f;
 
     [Header("jump Parameter")]
-    [SerializeField] private float jumpForce = 6.3f;
-    [SerializeField] private float jumpHeldForce = 1.9f;
+    [SerializeField] private float jumpForce = 5.3f;
+    [SerializeField] private float jumpHeldForce = 1.8f;
     [SerializeField] private float jumpHeldDuration = 0.1f;
 
     float jumpTime;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isJump;
 
     //jump Varaible
-    bool jumpPressed;
+   [SerializeField] bool jumpPressed;
     [SerializeField]bool jumpHeld;
 
     [Header("enviroment check")]
@@ -39,7 +39,12 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         jumpPressed = Input.GetButtonDown("Jump");
-        //jumpHeld = Input.GetButton("Jump");
+        jumpHeld = Input.GetButton("Jump");
+        
+    }
+
+    public void help() {
+        Debug.Log(";;");
     }
 
     private void FixedUpdate()
@@ -59,23 +64,24 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (jumpPressed && onGround && !isJump)
+        if (jumpHeld && onGround && !isJump)
         {
             onGround = false;
             isJump = true;
-
-            jumpTime = Time.deltaTime + jumpHeldDuration;
+            jumpTime = Time.time + jumpHeldDuration;
 
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
+
 
         else if (isJump)
         {
             if (jumpHeld)
                 rb.AddForce(new Vector2(0, jumpHeldForce), ForceMode2D.Impulse);
-            else if (jumpTime < Time.deltaTime)
+            if (jumpTime < Time.time)
                 isJump = false;
         }
+
     }
 
     void GroundMovement()
