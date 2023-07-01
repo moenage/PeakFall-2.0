@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("jump Parameter")]
     [SerializeField] private float jumpForce = 6.3f;
-    [SerializeField] private float jumpHoldForce = 1.9f;
-    [SerializeField] private float jumpHoldDuration = 0.1f;
+    [SerializeField] private float jumpHeldForce = 1.9f;
+    [SerializeField] private float jumpHeldDuration = 0.1f;
 
     float jumpTime;
 
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     //jump Varaible
     bool jumpPressed;
-    bool jumpHold;
+    [SerializeField]bool jumpHeld;
 
     [Header("enviroment check")]
     public LayerMask groundLayer;
@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         jumpPressed = Input.GetButtonDown("Jump");
-        jumpHold = Input.GetButton("Jump");
+        //jumpHeld = Input.GetButton("Jump");
     }
 
     private void FixedUpdate()
@@ -64,7 +64,17 @@ public class PlayerMovement : MonoBehaviour
             onGround = false;
             isJump = true;
 
+            jumpTime = Time.deltaTime + jumpHeldDuration;
+
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        }
+
+        else if (isJump)
+        {
+            if (jumpHeld)
+                rb.AddForce(new Vector2(0, jumpHeldForce), ForceMode2D.Impulse);
+            else if (jumpTime < Time.deltaTime)
+                isJump = false;
         }
     }
 
