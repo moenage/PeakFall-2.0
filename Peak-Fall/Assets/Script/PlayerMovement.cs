@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("state")]
     [SerializeField] private bool onGround;
     [SerializeField] private bool isJump;
+    [SerializeField] private bool damage;
 
     //jump Varaible
    [SerializeField] bool jumpPressed;
@@ -86,10 +87,14 @@ public class PlayerMovement : MonoBehaviour
 
     void GroundMovement()
     {
-        xVelocity = Input.GetAxis("Horizontal");
-
-        rb.velocity = new Vector2(xVelocity * speed, rb.velocity.y);
+        if (!damage)
+        {
+            xVelocity = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(xVelocity * speed, rb.velocity.y);
+        }
+            
         filpDirection();
+
     }
 
     void filpDirection()
@@ -98,5 +103,18 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
         else if (xVelocity > 0)
             transform.localScale = new Vector2(1, 1);
+    }
+
+    public void awayForce()
+    {
+        StartCoroutine(lessControll());
+        rb.AddForce(new Vector2(-5f * transform.localScale.x, 4f), ForceMode2D.Impulse);
+    }
+
+    IEnumerator lessControll()
+    {
+        damage = true;
+        yield return new WaitForSeconds(0.7f);
+        damage = false;
     }
 }
