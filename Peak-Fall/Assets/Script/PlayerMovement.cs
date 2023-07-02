@@ -14,13 +14,18 @@ public class PlayerMovement : MonoBehaviour {
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    public Vector2 wallJumpingPower = new Vector2(4f, 20f);
 
     private bool isWallSliding;
     private float wallSlidingSpeed = 1.5f;
 
-    private bool jumpPressed = false;
-    private bool jumpHeld = false;
+
+    bool jumping = false;
+    bool controlSpeed = false;
+    float timeRecord;
+
+    [SerializeField] TrailRenderer trail;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -28,14 +33,16 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    private void Start()
+    {
+        trail.enabled = false;
+    }
+
 
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
-        jumpPressed = Input.GetButtonDown("Jump");
-        jumpHeld = Input.GetButton("Jump");
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -49,8 +56,33 @@ public class PlayerMovement : MonoBehaviour {
         wallSlide();
         WallJump();
 
+        //if (jumping && timeRecord < Time.time)
+        //    StartCoroutine(addGravity());
+
         if (!isWallJumping)
             Flip();
+
+
+        if (rb.velocity.y < -100 && trail.enabled == false)
+            trail.enabled = true;
+        else if (rb.velocity.y > -100 && trail.enabled == true)
+            trail.enabled = false;
+
+
+        if (!controlSpeed && rb.velocity.y < -120)
+        {
+            rb.gravityScale = 1;
+            Physics2D.gravity = new Vector2(0, 0);
+            rb.velocity = new Vector2(0, -125f);
+            controlSpeed = true;
+        }
+        if (rb.velocity.y > -50)
+        {
+            rb.gravityScale = 4;
+            Physics2D.gravity = new Vector2(0, -9.8f);
+            controlSpeed = false;
+        }
+
     }
 
         private void FixedUpdate()
@@ -108,7 +140,15 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
             {
                 isWallJumping = true;
-                rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+
+            rb.AddForce(new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y), ForceMode2D.Impulse);
+            //Physics2D.gravity = new Vector2(0, -30f);
+
+
+
+            jumping = true;
+            timeRecord = Time.time + 0.5f;
+
                 wallJumpingCounter = 0f;
 
                 if (transform.localScale.x != wallJumpingDirection)
@@ -148,5 +188,13 @@ public class PlayerMovement : MonoBehaviour {
             damage = true;
             yield return new WaitForSeconds(0.7f);
             damage = false;
+        }
+
+        IEnumerator addGravity()
+        {
+            jumping = false;
+            Physics2D.gravity = new Vector2(0, -66f);
+            yield return new WaitForSeconds(1f);
+            Physics2D.gravity = new Vector2(0, -9.8f);
         }
 }
