@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreSystem : MonoBehaviour {
     [SerializeField] int score = 100;
@@ -9,8 +10,6 @@ public class ScoreSystem : MonoBehaviour {
 
     private PlayerMovement player;
     private Renderer playerRender;
-
-
 
     // Start is  called before the first frame update
     void Start() {

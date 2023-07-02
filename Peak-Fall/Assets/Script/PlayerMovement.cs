@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
     private float horizontal;
@@ -23,6 +24,8 @@ public class PlayerMovement : MonoBehaviour {
     bool jumping = false;
     bool controlSpeed = false;
     float timeRecord;
+
+    public Text velocity_Text;
 
     [SerializeField] TrailRenderer trail;
 
@@ -82,6 +85,8 @@ public class PlayerMovement : MonoBehaviour {
             Physics2D.gravity = new Vector2(0, -9.8f);
             controlSpeed = false;
         }
+
+        velocity_Text.text = Mathf.Abs(rb.velocity.y).ToString();
 
     }
 
