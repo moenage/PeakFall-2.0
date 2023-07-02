@@ -1388,10 +1388,9 @@ GameObject:
   - component: {fileID: 1392541654}
   - component: {fileID: 1392541656}
   - component: {fileID: 1392541657}
-  - component: {fileID: 1392541658}
   m_Layer: 3
   m_Name: Test Circle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1561,27 +1560,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.43905842}
   m_EdgeRadius: 0
---- !u!95 &1392541658
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392541651}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 35eca7b79f778f141a883680ee803c7d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1582136854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2967978838875298537, guid: fe755dd1fec45284d995cb15488e9b7f, type: 3}
@@ -1954,7 +1932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956126799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1500, z: 0}
+  m_LocalPosition: {x: 0, y: -50, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1993,7 +1971,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000014901161, y: -0.12216833}
+  m_Offset: {x: 0.034581542, y: -0.12216833}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2004,7 +1982,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6388079, y: 0.75566334}
+  m_Size: {x: 2.4139931, y: 0.75566334}
   m_EdgeRadius: 0
 --- !u!114 &1956126803
 MonoBehaviour:
