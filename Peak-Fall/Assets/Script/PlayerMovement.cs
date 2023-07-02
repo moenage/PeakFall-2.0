@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool isWallSliding;
     private float wallSlidingSpeed = 1.5f;
 
-
+    public bool inAir = false;
     bool jumping = false;
     bool controlSpeed = false;
     float timeRecord;
@@ -44,20 +44,28 @@ public class PlayerMovement : MonoBehaviour {
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        if (!IsGrounded())
+            inAir = true;
+
+        if (inAir && IsGrounded())
+        {
+            inAir = false;
+            AudioManager.instance.landing();
+        }
+
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
+            AudioManager.instance.jumping();
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
+            AudioManager.instance.jumping();
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
         wallSlide();
         WallJump();
-
-        //if (jumping && timeRecord < Time.time)
-        //    StartCoroutine(addGravity());
 
         if (!isWallJumping)
             Flip();
@@ -97,7 +105,6 @@ public class PlayerMovement : MonoBehaviour {
 
                 rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
             }
-
         }
 
         private bool IsGrounded()
@@ -140,6 +147,8 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
             {
                 isWallJumping = true;
+                AudioManager.instance.jumping();
+                
 
             rb.AddForce(new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y), ForceMode2D.Impulse);
             //Physics2D.gravity = new Vector2(0, -30f);
