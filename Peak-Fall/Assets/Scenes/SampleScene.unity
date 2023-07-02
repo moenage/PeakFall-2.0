@@ -406,6 +406,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3209323335273635680, guid: 40a82527f1f2ecd44918cb320d04b3b4, type: 3}
   m_PrefabInstance: {fileID: 1894444568}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &440103771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440103772}
+  m_Layer: 0
+  m_Name: Wall Checker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440103772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440103771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.54, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1392541653}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +544,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1392541653}
   generatorTarget: {fileID: 1040382574}
+--- !u!1 &523200072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 523200073}
+  m_Layer: 0
+  m_Name: Check Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &523200073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523200072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1392541653}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &655207520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3209323335273635680, guid: 40a82527f1f2ecd44918cb320d04b3b4, type: 3}
@@ -1134,7 +1196,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 523200073}
+  - {fileID: 440103772}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1161,10 +1225,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &1392541656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,15 +1241,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81389604f448466595a73150bc55c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  jumpForce: 6.3
-  jumpHoldForce: 1.9
-  jumpHoldDuration: 0.1
-  onGround: 0
-  isJump: 0
+  rb: {fileID: 1392541654}
+  groundCheck: {fileID: 523200073}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  wallCheck: {fileID: 440103772}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &1392541657
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1195,7 +1259,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1392541651}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c179f8021fe994d8489a78c8740b2c02, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
