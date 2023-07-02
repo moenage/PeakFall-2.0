@@ -3,18 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ScoreChange : MonoBehaviour
 {
-    public int score = 0; // The score value to be set in your game.
-
-    private void Start()
-    {
-        // You can set the score here or get it from another script or source.
-        // For example, you might have a script that updates the score value based on player performance.
-        // For simplicity, I'll just set it to 100 for demonstration purposes.
-        score = 100;
-
-        // Call the function to load the scene based on the score.
-        LoadSceneBasedOnScore();
-    }
+    public float score = 0f; // The score value to be set in your game.
 
     private void LoadSceneBasedOnScore()
     {
@@ -38,6 +27,15 @@ public class ScoreChange : MonoBehaviour
         {
             // F or any other score
             SceneManager.LoadScene("SceneF");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
+            Debug.Log("COLLISIOOOOOOONNNNNNNNNNNNN" + collision.tag);
+            score = -collision.attachedRigidbody.velocity.y;
+            Debug.Log("SSCOREEEEEEEEEEEEE" + score);
+            LoadSceneBasedOnScore();
         }
     }
 }
