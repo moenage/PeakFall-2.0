@@ -838,7 +838,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1968345836, guid: f711f75d780aa1d44bb313d43fa06f0b, type: 3}
+  m_Sprite: {fileID: -1968345836, guid: ef01f54871fb73d488db312b6db92c02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -857,7 +857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369226496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.49, y: -4, z: 0}
+  m_LocalPosition: {x: -5.49, y: -3.89, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -954,6 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallJumpingPower: {x: 4, y: 10}
+  velocity_Text: {fileID: 0}
   trail: {fileID: 0}
   rb: {fileID: 1369226501}
   groundCheck: {fileID: 1281930258}
