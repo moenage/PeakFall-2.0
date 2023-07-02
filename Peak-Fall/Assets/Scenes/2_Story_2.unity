@@ -985,6 +985,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 669976853438048555, guid: 0bee03d8506a484459801979e6c1883a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5125
+      objectReference: {fileID: 0}
     - target: {fileID: 1069925767065658135, guid: 0bee03d8506a484459801979e6c1883a, type: 3}
       propertyPath: m_Name
       value: Platform Holder
@@ -995,7 +999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2256031881925239114, guid: 0bee03d8506a484459801979e6c1883a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 12.475
+      value: 26.977186
       objectReference: {fileID: 0}
     - target: {fileID: 2256031881925239114, guid: 0bee03d8506a484459801979e6c1883a, type: 3}
       propertyPath: m_LocalPosition.x
