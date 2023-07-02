@@ -45,10 +45,6 @@ public class PlayerMovement : MonoBehaviour {
         Debug.Log(";;");
     }
 
-    public void help() {
-        Debug.Log(";;");
-    }
-
     private void FixedUpdate() {
         PhysicsCheck();
         GroundMovement();
