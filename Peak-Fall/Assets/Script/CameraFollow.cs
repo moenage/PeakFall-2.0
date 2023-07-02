@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour
 
     public Transform target;
     public Transform generatorTarget;
+    public Transform platformGenTarget;
 
     private void LateUpdate() {
         if(target.position.y < transform.position.y) {
@@ -15,6 +16,9 @@ public class CameraFollow : MonoBehaviour
 
             Vector3 newGenPosition = new Vector3(0, target.position.y + 12, 0);
             generatorTarget.position = newGenPosition;
+
+            Vector3 newPlatformGenPosition = new Vector3(0, target.position.y - 12, 0);
+            platformGenTarget.position = newPlatformGenPosition;
         }
     }
 }

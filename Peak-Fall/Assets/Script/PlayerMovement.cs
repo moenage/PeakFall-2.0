@@ -30,20 +30,17 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-    void Update()
-    {
+    void Update() {
         horizontal = Input.GetAxisRaw("Horizontal");
 
         jumpPressed = Input.GetButtonDown("Jump");
         jumpHeld = Input.GetButton("Jump");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
+        if (Input.GetButtonDown("Jump") && IsGrounded()) {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f) {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
         wallSlide();
@@ -53,100 +50,85 @@ public class PlayerMovement : MonoBehaviour {
             Flip();
     }
 
-        private void FixedUpdate()
-        {
-            if (!damage && !isWallJumping)
-            {
+    private void FixedUpdate() {
+        if (!damage && !isWallJumping) {
 
-                if (isWallSliding && ((isFacingRight && horizontal > 0) || (!isFacingRight && horizontal < 0)))
-                {
-                    return;
-                }
-
-                rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            if (isWallSliding && ((isFacingRight && horizontal > 0) || (!isFacingRight && horizontal < 0))) {
+                return;
             }
 
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
 
-        private bool IsGrounded()
-        {
-            return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool IsGrounded() {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool isWalled() {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+    private void wallSlide() {
+
+        if (isWalled() && !IsGrounded() && horizontal != 0f) {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
+        else
+            isWallSliding = false;
+    }
 
-        private bool isWalled()
-        {
-            return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-        }
-
-        private void wallSlide()
-        {
-
-            if (isWalled() && !IsGrounded() && horizontal != 0f)
-            {
-                isWallSliding = true;
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
-            }
-            else
-                isWallSliding = false;
-        }
-
-        private void WallJump()
-        {
-            if (isWallSliding)
-            {
-                isWallJumping = false;
-                wallJumpingDirection = -transform.localScale.x;
-                wallJumpingCounter = wallJumpingTime;
-
-                CancelInvoke(nameof(StopWallJumping));
-            }
-            else
-            {
-                wallJumpingCounter -= Time.deltaTime;
-            }
-
-            if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
-            {
-                isWallJumping = true;
-                rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
-                wallJumpingCounter = 0f;
-
-                if (transform.localScale.x != wallJumpingDirection)
-                {
-                    isFacingRight = !isFacingRight;
-                    Vector3 localScale = transform.localScale;
-                    localScale.x *= -1f;
-                    transform.localScale = localScale;
-                }
-
-                Invoke(nameof(StopWallJumping), wallJumpingDuration);
-            }
-        }
-
-        private void StopWallJumping()
-        {
+    private void WallJump() {
+        if (isWallSliding) {
             isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
+
+            CancelInvoke(nameof(StopWallJumping));
+        }
+        else {
+            wallJumpingCounter -= Time.deltaTime;
         }
 
-        private void Flip()
-        {
-            if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
-            {
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f) {
+            isWallJumping = true;
+            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
+
+            if (transform.localScale.x != wallJumpingDirection) {
                 isFacingRight = !isFacingRight;
                 Vector3 localScale = transform.localScale;
                 localScale.x *= -1f;
                 transform.localScale = localScale;
             }
-        }
 
-        public void awayForce() {
-            StartCoroutine(lessControll());
-            rb.AddForce(new Vector2(-5f * transform.localScale.x, 4f), ForceMode2D.Impulse);
+            Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
+    }
 
-        IEnumerator lessControll() {
-            damage = true;
-            yield return new WaitForSeconds(0.7f);
-            damage = false;
+    private void StopWallJumping() {
+        isWallJumping = false;
+    }
+
+    private void Flip() {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
         }
+    }
+
+    public void awayForce() {
+        StartCoroutine(lessControll());
+        rb.AddForce(new Vector2(-5f * transform.localScale.x, 4f), ForceMode2D.Impulse);
+    }
+
+    IEnumerator lessControll() {
+        damage = true;
+        yield return new WaitForSeconds(0.7f);
+        damage = false;
+    }
 }
